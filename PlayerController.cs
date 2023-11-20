@@ -70,20 +70,29 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void TakeDamage()
+    public void TakeDamage(int damageToRecieve)
     {
-        playerAnimator.Play("Hurt");
-        if ( playerLives > 1)
+        if (damageToRecieve == -1)
         {
-            playerAudioSource.PlayOneShot(damagedSound);
+            playerLives -= 1;
+            playerAnimator.Play("Hurt");
+            if (playerLives > 1)
+            {
+                playerAudioSource.PlayOneShot(damagedSound);
 
-        }
-        playerLives -= 1;
-        
-        if (playerLives <= 0)
+            }
+
+            if (playerLives <= 0)
+            {
+                playerAudioSource.PlayOneShot(deathSound);
+                playerIsAlive = false;
+            }
+        } else
         {
-            playerAudioSource.PlayOneShot(deathSound);
-            playerIsAlive = false;
+            if (playerLives < 3 && playerIsAlive)
+            {
+                playerLives += 1;
+            }
         }
     }
 

@@ -11,7 +11,7 @@ public class EnemySpawner : MonoBehaviour
     public float spawnMax;
 
     private float spawnPosX = 8f;
-    private float spawPosY = -3.08f;
+    private float spawnPosY = -3.08f;
 
     private float targetTime;
     void Start()
@@ -32,7 +32,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void SpawnEnemy()
     {
-        Vector2 spawnPos = new Vector3(spawnPosX, spawPosY);
+        Vector2 spawnPos = new Vector3(spawnPosX, spawnPosY);
 
         Instantiate(banditPrefab, spawnPos, Quaternion.identity);
     }

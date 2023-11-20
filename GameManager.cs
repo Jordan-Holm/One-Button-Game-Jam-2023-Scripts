@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,6 +13,10 @@ public class GameManager : MonoBehaviour
     public Image fillColor;
 
     public PlayerController player;
+
+    public int score;
+    public TextMeshProUGUI scoreText;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,6 +34,12 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(3);
         
         aKeyIndicator.SetActive(true);
+    }
+
+    public void AddScore(int scoreToAdd)
+    {
+        score += scoreToAdd;
+        scoreText.text = score.ToString();
     }
 
     private void CheckHearts()

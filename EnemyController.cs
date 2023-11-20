@@ -7,6 +7,7 @@ public class EnemyController : MonoBehaviour
     [Header("Enemy Stats")]
     public bool isAlive = true;
     public float speed;
+    public int scoreWorth = 10;
 
     [Header("Animator")]
     public Animator enemyAnimator;
@@ -50,7 +51,7 @@ public class EnemyController : MonoBehaviour
         if (collision.gameObject.tag == "Player" && isAlive)
         {
             enemyAnimator.Play("Attack");
-            collision.gameObject.GetComponent<PlayerController>().TakeDamage();
+            collision.gameObject.GetComponent<PlayerController>().TakeDamage(-1);
             gameObject.GetComponent<AudioSource>().PlayOneShot(attackSound);
         }
     }
@@ -63,5 +64,7 @@ public class EnemyController : MonoBehaviour
         
         isAlive = false;
         speed = 3f;
+
+        gameManager.AddScore(scoreWorth);
     }
 }
