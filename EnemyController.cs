@@ -12,6 +12,8 @@ public class EnemyController : MonoBehaviour
     public Animator enemyAnimator;
 
     public GameManager gameManager;
+    public AudioClip damageSound;
+    public AudioClip attackSound;
 
     // Start is called before the first frame update
     void Start()
@@ -49,6 +51,7 @@ public class EnemyController : MonoBehaviour
         {
             enemyAnimator.Play("Attack");
             collision.gameObject.GetComponent<PlayerController>().TakeDamage();
+            gameObject.GetComponent<AudioSource>().PlayOneShot(attackSound);
         }
     }
 
@@ -56,6 +59,7 @@ public class EnemyController : MonoBehaviour
     public void TakeDamage()
     {
         enemyAnimator.Play("LightBandit_Hurt");
+        gameObject.GetComponent<AudioSource>().PlayOneShot(damageSound);
         
         isAlive = false;
         speed = 3f;

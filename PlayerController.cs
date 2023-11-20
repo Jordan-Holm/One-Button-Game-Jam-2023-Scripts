@@ -18,13 +18,19 @@ public class PlayerController : MonoBehaviour
     public Transform attackPos;
     public LayerMask enemyLM;
     public float attackRange;
+    public AudioClip attackClip;
 
+    public AudioClip damagedSound;
+    public AudioClip deathSound;
+
+    private AudioSource playerAudioSource;
     public GameManager gameManager;
 
     // Start is called before the first frame update
     void Start()
     {
         playerAnimator = GetComponent<Animator>();
+        playerAudioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -55,6 +61,8 @@ public class PlayerController : MonoBehaviour
                     enemyToDamage[i].GetComponent<EnemyController>().TakeDamage();
                 }
                 timeBtwAttack = startTimeBtwAttack;
+
+                playerAudioSource.PlayOneShot(attackClip);
             }
         } else
         {
@@ -65,10 +73,16 @@ public class PlayerController : MonoBehaviour
     public void TakeDamage()
     {
         playerAnimator.Play("Hurt");
+        if ( playerLives > 1)
+        {
+            playerAudioSource.PlayOneShot(damagedSound);
+
+        }
         playerLives -= 1;
         
         if (playerLives <= 0)
         {
+            playerAudioSource.PlayOneShot(deathSound);
             playerIsAlive = false;
         }
     }

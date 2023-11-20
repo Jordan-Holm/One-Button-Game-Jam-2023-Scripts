@@ -33,8 +33,6 @@ public class GameManager : MonoBehaviour
 
     private void CheckHearts()
     {
-        Debug.Log("Player Lives: " + player.playerLives);
-
         if (player.playerLives < 1) //Ends Game
         {
             if (player.playerIsAlive == false)
@@ -59,7 +57,5 @@ public class GameManager : MonoBehaviour
         {
             livesSlider.value = 1;
         }
-
-        Debug.Log("Slider Value: " + livesSlider.value);
     }
 }
