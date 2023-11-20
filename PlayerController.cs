@@ -18,13 +18,17 @@ public class PlayerController : MonoBehaviour
     public Transform attackPos;
     public LayerMask enemyLM;
     public float attackRange;
-    public AudioClip attackClip;
 
+    [Header("Audio Clips")]
+    public AudioClip attackClip;
     public AudioClip damagedSound;
     public AudioClip deathSound;
+    public AudioClip healClip;
+    public AudioClip startSound;
 
     private AudioSource playerAudioSource;
     public GameManager gameManager;
+    private bool startgame = false;
 
     // Start is called before the first frame update
     void Start()
@@ -36,6 +40,10 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (startgame)
+        {
+            playerAudioSource.PlayOneShot(startSound);
+        }
         if (playerIsAlive)
         {
             AttackMechanic();
@@ -92,6 +100,7 @@ public class PlayerController : MonoBehaviour
             if (playerLives < 3 && playerIsAlive)
             {
                 playerLives += 1;
+                playerAudioSource.PlayOneShot(healClip);
             }
         }
     }
@@ -99,6 +108,12 @@ public class PlayerController : MonoBehaviour
     public void PlayerDeath()
     {
         playerAnimator.Play("Death");
+    }
+
+    public void MovePlayerMenu()
+    {
+        playerAnimator.Play("Attack2");
+        startgame = true;
     }
 
     void OnDrawGizmosSelected()

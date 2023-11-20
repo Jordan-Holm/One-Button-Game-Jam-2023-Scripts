@@ -6,7 +6,9 @@ public class EnemyController : MonoBehaviour
 {
     [Header("Enemy Stats")]
     public bool isAlive = true;
-    public float speed;
+    public float speedMax;
+    public float speedMin = 3.5f;
+    public float defaultSpeed = 3f;
     public int scoreWorth = 10;
 
     [Header("Animator")]
@@ -28,7 +30,6 @@ public class EnemyController : MonoBehaviour
     {
         if (gameManager.gameIsRunning == false)
         {
-            speed = 0;
             enemyAnimator.SetBool("GameIsRunning", false);
         }
         
@@ -38,12 +39,27 @@ public class EnemyController : MonoBehaviour
 
     private void MoveEnemy()
     {
-        transform.Translate(Vector2.left * speed * Time.deltaTime);
+        if (gameManager.hasStopWatch & isAlive)
+            transform.Translate(Vector2.left * (RandomSpeed(speedMin, speedMax) * 0.5f) * Time.deltaTime);
+        else
+            transform.Translate(Vector2.left * RandomSpeed(speedMin, speedMax) * Time.deltaTime);
 
         if (transform.position.x <= -10)
         {
             Destroy(gameObject);
         }
+    }
+
+    private float RandomSpeed(float speedMin, float speedMax)
+    {
+        if (gameManager.gameIsRunning == false)
+            defaultSpeed = 0;
+        else if (!isAlive)
+            defaultSpeed = 3;
+        else
+            defaultSpeed = Random.Range(speedMin, speedMax);
+        Debug.Log(defaultSpeed);
+        return defaultSpeed;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -56,14 +72,13 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-
     public void TakeDamage()
     {
         enemyAnimator.Play("LightBandit_Hurt");
         gameObject.GetComponent<AudioSource>().PlayOneShot(damageSound);
         
         isAlive = false;
-        speed = 3f;
+
 
         gameManager.AddScore(scoreWorth);
     }

@@ -6,7 +6,6 @@ public class PickUpSpawner : MonoBehaviour
 {
     public GameManager gameManager;
     public GameObject[] pickUpPrefabs;
-    private int randomPickUp;
 
     public float spawnMin;
     public float spawnMax;
@@ -41,7 +40,6 @@ public class PickUpSpawner : MonoBehaviour
     private int GetRandomPrefab(GameObject[] prefabs)
     {
         int randomPrefab = Random.Range(0, prefabs.Length);
-        Debug.Log(randomPrefab);
         return randomPrefab;
     }
 }

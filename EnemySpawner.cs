@@ -26,7 +26,10 @@ public class EnemySpawner : MonoBehaviour
         if (targetTime <= 0 && gameManager.gameIsRunning == true)
         {
             SpawnEnemy();
-            targetTime = Random.Range(spawnMin, spawnMax);
+            if (gameManager.hasStopWatch)
+                targetTime = Random.Range(spawnMin * 2, spawnMax * 2);
+            else
+                targetTime = Random.Range(spawnMin, spawnMax);
         }
     }
 

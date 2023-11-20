@@ -9,7 +9,7 @@ public class PickUp : MonoBehaviour
     public int livesToAdd;
 
     [Header("Pik Up Stats")]
-    public float speed;
+    public float speed = 3f;
 
     public GameManager gameManager;
     public PlayerController playerController;
@@ -18,7 +18,6 @@ public class PickUp : MonoBehaviour
     {
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
         playerController = GameObject.Find("HeroKnight").GetComponent<PlayerController>();
-
     }
 
     // Update is called once per frame
@@ -44,11 +43,23 @@ public class PickUp : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Player" )
+        if (collision.gameObject.name == "HeroKnight" )
         {
-            if(type == "Health")
+            if(type == "Health" && playerController.playerLives < 3)
             {
                 playerController.TakeDamage(1);
+                Destroy(gameObject);
+            }
+
+            if(type == "Double Points")
+            {
+                gameManager.StartCoroutine(gameManager.StartDoublePoints());
+                Destroy(gameObject);
+            }
+
+            if(type == "Stop Watch")
+            {
+                gameManager.StartCoroutine(gameManager.StartStopWatch());
                 Destroy(gameObject);
             }
         }

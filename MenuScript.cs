@@ -17,10 +17,12 @@ public class MenuScript : MonoBehaviour
     [SerializeField] private float currentAmount;
     [SerializeField] private float speed;
 
+    public PlayerController player;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -38,7 +40,10 @@ public class MenuScript : MonoBehaviour
                 currentAmount += speed * Time.deltaTime;
             } else
             {
-                SceneManager.LoadScene("Game");
+                player.MovePlayerMenu();
+                gameObject.GetComponent<SpriteRenderer>().enabled = false;
+                loadingBarTransform.GetComponent<Image>().enabled = false;
+                StartCoroutine(StartGame());
             }
             loadingBarTransform.GetComponent<Image>().fillAmount = currentAmount / 100;
         }
@@ -52,5 +57,10 @@ public class MenuScript : MonoBehaviour
         }
     }
 
+    IEnumerator StartGame()
+    {
+        yield return new WaitForSeconds(3);
+        SceneManager.LoadScene("Game");
+    }
     
 }

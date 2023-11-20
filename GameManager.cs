@@ -17,11 +17,10 @@ public class GameManager : MonoBehaviour
     public int score;
     public TextMeshProUGUI scoreText;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
+    private bool hasDoublePoints;
+    private float doublePointsMaxTime = 5;
+    public bool hasStopWatch;
+    private float stopWatchMaxTime = 5;
 
     // Update is called once per frame
     void Update()
@@ -38,8 +37,42 @@ public class GameManager : MonoBehaviour
 
     public void AddScore(int scoreToAdd)
     {
-        score += scoreToAdd;
-        scoreText.text = score.ToString();
+        score += DoublePointsAdjustment(scoreToAdd);
+
+        if (hasDoublePoints)
+        {
+            string doublePointText = score.ToString() + " X2";
+            scoreText.text = doublePointText;
+        }
+        else
+            scoreText.text = score.ToString();
+    }
+
+    public int DoublePointsAdjustment(int scoreToAdjust)
+    {
+        if (hasDoublePoints)
+        {
+            return scoreToAdjust * 2;
+        } else
+        {
+            return scoreToAdjust;
+        }
+    }
+
+    public IEnumerator StartDoublePoints()
+    {
+        Debug.Log("Has Double Points? " + hasDoublePoints);
+        hasDoublePoints = true;
+        yield return new WaitForSeconds(doublePointsMaxTime);
+        hasDoublePoints = false;
+        Debug.Log("Has Double Points? " + hasDoublePoints);
+    }
+
+    public IEnumerator StartStopWatch()
+    {
+        hasStopWatch = true;
+        yield return new WaitForSeconds(stopWatchMaxTime);
+        hasStopWatch = false;
     }
 
     private void CheckHearts()
