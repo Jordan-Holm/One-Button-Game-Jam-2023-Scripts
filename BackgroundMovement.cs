@@ -11,7 +11,7 @@ public class BackgroundMovement : MonoBehaviour
 
     private void Start()
     {
-        startPos.x = 30;
+        startPos.x = 27;
     }
 
     // Update is called once per frame
@@ -22,7 +22,7 @@ public class BackgroundMovement : MonoBehaviour
             speed = 0;
         }
 
-        if (transform.position.x <= -29)
+        if (transform.position.x <= -32)
         {
             transform.position = startPos;
         }

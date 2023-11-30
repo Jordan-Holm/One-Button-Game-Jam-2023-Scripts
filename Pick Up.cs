@@ -48,6 +48,7 @@ public class PickUp : MonoBehaviour
             if(type == "Health" && playerController.playerLives < 3)
             {
                 playerController.TakeDamage(1);
+                playerController.PlayHealParticle();
                 Destroy(gameObject);
             }
 

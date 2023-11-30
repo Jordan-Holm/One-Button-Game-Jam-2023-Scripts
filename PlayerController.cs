@@ -18,17 +18,18 @@ public class PlayerController : MonoBehaviour
     public Transform attackPos;
     public LayerMask enemyLM;
     public float attackRange;
+    public GameObject attackPosIndicator;
 
     [Header("Audio Clips")]
     public AudioClip attackClip;
     public AudioClip damagedSound;
     public AudioClip deathSound;
     public AudioClip healClip;
-    public AudioClip startSound;
 
     private AudioSource playerAudioSource;
     public GameManager gameManager;
     private bool startgame = false;
+    public ParticleSystem healthParticle;
 
     // Start is called before the first frame update
     void Start()
@@ -40,10 +41,6 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (startgame)
-        {
-            playerAudioSource.PlayOneShot(startSound);
-        }
         if (playerIsAlive)
         {
             AttackMechanic();
@@ -108,8 +105,12 @@ public class PlayerController : MonoBehaviour
     public void PlayerDeath()
     {
         playerAnimator.Play("Death");
+        attackPosIndicator.SetActive(false);
     }
-
+    public void PlayHealParticle()
+    {
+        healthParticle.Play();
+    }
     public void MovePlayerMenu()
     {
         playerAnimator.Play("Attack2");
